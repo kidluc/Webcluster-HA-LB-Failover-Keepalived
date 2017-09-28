@@ -133,7 +133,7 @@ Khởi động MySQL lên:
 ```
 /etc/init.d/mysql start
 ```
-
+Vậy là chúng ta có thể đồng bộ DB giữa 3 node thông qua  Percona ExtraDB
 
 ***1-2, Cấu hình DB cluster sử dụng Galera MySQL cluster bản 5.6.***
 
