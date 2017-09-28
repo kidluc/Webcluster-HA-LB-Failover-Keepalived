@@ -116,9 +116,18 @@ mysql> exit;
 
 **Node 2**
 Tương tự node 1 chỉnh file /etc/mysql/my.cnf chỉ đổi dòng wsrep_node_address=10.0.0.138 => wsrep_node_address=10.0.0.139
-
-
-
+Khởi động MySQL lên:
+```
+/etc/init.d/mysql start
+```
+Vào MySQL kiểm tra sẽ được kết quả:
+![Percona1](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/Percona2.png)
+**Node 3**
+Thiết lập như node 2 chỉ thay đổi địa chỉ IP dòng wsrep_node_address=10.0.0.139 => wsrep_node_address=10.0.0.140
+Khởi động MySQL lên:
+```
+/etc/init.d/mysql start
+```
 
 
 ***1-2, Cấu hình DB cluster sử dụng Galera MySQL cluster bản 5.6.***
