@@ -600,7 +600,7 @@ Hoặc truy cấp IPHA1/IPHA2:9000/stats để kiểm tra tình trạng load bal
 ![testHA+LB1](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/testHA%2BLB1.png)
 ![testHA+LB2](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/testHA%2BLB2.png)
 
-***Triển khai keepalived ***
+***Triển khai keepalived***
 
 Cả 2 HA1 và HA2 đều lấy 1 IP là 10.0.0.131 làm IP của chúng, nếu có 1 node trong 2 node HA bị lỗi, node còn lại sẽ lấy IP đó và tiếp tục công việc.
 
