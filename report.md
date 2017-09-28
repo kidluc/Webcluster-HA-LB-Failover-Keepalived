@@ -334,9 +334,10 @@ Tại node1-WP1 ta tạo một DB test và đưa vào nó các table cùng các 
 
 Sang node2 ta truy cập mysql và kiểm tra bằng lệnh
 
-```
-SELECT * FROM test.equipment
-```, 
+
+    SELECT * FROM test.equipment
+
+
 nếu có thể thấy được DB test như bên node1 đã tạo ra thì có nghĩa là node1 và node2 đã đồng bộ DB với nhau.
 ![]()
 
