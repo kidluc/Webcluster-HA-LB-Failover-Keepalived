@@ -30,7 +30,7 @@ Cấu hình lại file */etc/hosts* thêm các dòng sau
 ```
 ![]()
 
-II, Cấu hình các máy chứa Wordpress và DB Cluster.
+II, Cấu hình đồng bộ cho các node Backend..
 -------------------------------------------------------------------
 Ở đây ta có 2 cách để đồng bộ dữ liệu trong DB cluster là Percona XtraDB hoặc Galera MySQL Cluster. 
 
