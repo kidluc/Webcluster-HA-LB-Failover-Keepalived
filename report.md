@@ -2,13 +2,12 @@
 
 #### I, Mô hình triển khai.
 Ở đây, chúng em triển khai mô hình gồm có 2 Node làm HAproxy, KeepAlive, Failover và 3 Node dùng để đặt Wordpress cùng DB cluster.
-**
-WP1	10.0.0.138	WP+DB cluster
-WP2	10.0.0.139	WP+DB cluster
-WP3	10.0.0.140	WP+DB cluster
-HA1		10.0.0.135	HAproxy+KeepAlive+LB
-HA3 	10.0.0.136	HAproxy+KeepAlive+LB
-**
+
+ * WP1	10.0.0.138	WP+DB cluster
+ * WP2	10.0.0.139	WP+DB cluster
+ * WP3	10.0.0.140	WP+DB cluster
+ * HA1		10.0.0.135	HAproxy+KeepAlive+LB
+ * HA3 	10.0.0.136	HAproxy+KeepAlive+LB
 
 Ta cấu hình trên cả 5 máy 2 file /etc/hosts và /etc/hostname
 Cấu hình lại file */etc/hostsname*
@@ -31,7 +30,8 @@ II, Cấu hình các máy chứa Wordpress và DB Cluster.
 Ở đây ta sử dụng 2 cách để đồng bộ dữ liệu trong DB cluster là Percona XtraDB hoặc Galera MySQL Cluster.
 
 ***1-1, Cấu hình DB cluster sử dụng Percona XtraDB***
-***1.1, Cài đặt My SQL Multi Cluster - Percona Extra DB ***
+
+***1.1, Cài đặt My SQL Multi Cluster - Percona Extra DB***
 
 Để tránh việc xung đột với cài đặt bạn cần gỡ bỏ MySQL để tránh bị các lỗi không cần thiết. Dùng câu lệnh sau:
 
@@ -122,8 +122,11 @@ Tương tự node 1 chỉnh file /etc/mysql/my.cnf chỉ đổi dòng wsrep_node
 
 
 ***1-2, Cấu hình DB cluster sử dụng Galera MySQL cluster bản 5.6.***
+
 ***1.1, Add các repo, key của package Galera MySQL.***
+
 Ngoài Galera ra thì có thể sử dụng Percona Xtra DB cũng có khả năng sync DB.
+
 Việc add các repo này cần được thực hiện trên 3 node chứa WP và DB cluster.
 
 ```
@@ -134,6 +137,7 @@ Việc add các repo này cần được thực hiện trên 3 node chứa WP v�
 ```
 
 ***1.2, Cài đặt MySQL và Galera***
+
 Việc này cũng cần được thực hiện trên cả 3 máy
 ```
 sudo apt-get install galera-3 galera-arbitrator-3 mysql-wsrep-5.6
