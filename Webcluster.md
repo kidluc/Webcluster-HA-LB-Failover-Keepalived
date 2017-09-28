@@ -547,8 +547,9 @@ Ta có thể truy cập cả 3 node cùng 1 wordpress.
 ![WP2](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/WP2.png)
 ![WP3](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/WP3.png)
 
-III, Triển khai HAproxy, Load balance, keepalive trên 2 node là HA1 và HA2
 
+
+III, Triển khai HAproxy, Load balance, keepalive trên 2 node là HA1 và HA2
 -------------------------------------------------------------------------------------------------
 
 HA1: 10.0.0.135
