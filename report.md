@@ -116,6 +116,7 @@ mysql> exit;
 
 **Node 2:**
 Tương tự node 1 chỉnh file /etc/mysql/my.cnf chỉ đổi dòng wsrep_node_address=10.0.0.138 => wsrep_node_address=10.0.0.139
+
 Khởi động MySQL lên:
 ```
 /etc/init.d/mysql start
@@ -126,6 +127,7 @@ Vào MySQL kiểm tra sẽ được kết quả:
 
 **Node 3:**
 Thiết lập như node 2 chỉ thay đổi địa chỉ IP dòng wsrep_node_address=10.0.0.139 => wsrep_node_address=10.0.0.140
+
 Khởi động MySQL lên:
 
 ```
