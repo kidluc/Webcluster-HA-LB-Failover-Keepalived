@@ -492,6 +492,7 @@ Tại một node bất kỳ
 Trên node bất kỳ, truy cập vào MySQL shell
 Tại đó ta tạo ra một DB wordpress để làm wordpress DB như anh dưới
 ![createwpdb](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/createwpdb.png)
+
 Các câu lệnh được sử dụng là:
 ```
 CREATE DATABASE wordpress;
@@ -503,7 +504,7 @@ Ta chuyển sang các node khác để xác nhận wordpress DB này đã đư�
 ![wpnode2sync](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/wpnode2sync.png)
 ![wpnode3sync](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/wpnode3sync.png)
 
-***4.3, Cài đặt Wordpresss**
+**4.3, Cài đặt Wordpresss**
 
 Tải wordpress bản mới nhất về và giải nén.
 ```
