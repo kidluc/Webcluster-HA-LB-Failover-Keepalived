@@ -8,5 +8,5 @@ BÁO CÁO TRIỂN KHAI WEBCLUSTER
 
 **Phương án triển khai**
 - 3 nodes backend sử dụng Percona Xtrabackup để đồng bộ dữ liệu
-- 
-
+- Đồng thời sử dụng GLUSTERFS để đồng bộ Web-content giữa 3 nodes
+- Triển khai HA + Layer 4 Load-balancing + Keepalive
