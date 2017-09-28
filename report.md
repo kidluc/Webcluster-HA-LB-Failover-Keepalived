@@ -32,9 +32,9 @@ Cấu hình lại file */etc/hosts* thêm các dòng sau
 
 II, Cấu hình các máy chứa Wordpress và DB Cluster.
 -------------------------------------------------------------------
-Ở đây ta sử dụng 2 cách để đồng bộ dữ liệu trong DB cluster là Percona XtraDB hoặc Galera MySQL Cluster.
+Ở đây ta có 2 cách để đồng bộ dữ liệu trong DB cluster là Percona XtraDB hoặc Galera MySQL Cluster. 
 
-***1-1, Cấu hình DB cluster sử dụng Percona XtraDB***
+***1, Cấu hình DB cluster sử dụng Percona XtraDB***
 
 ***1.1, Cài đặt My SQL Multi Cluster - Percona Extra DB***
 
@@ -140,9 +140,9 @@ Khởi động MySQL lên:
 ```
 Vậy là chúng ta có thể đồng bộ DB giữa 3 node thông qua  Percona ExtraDB
 
-***1-2, Cấu hình DB cluster sử dụng Galera MySQL cluster bản 5.6.***
+***2, Cấu hình DB cluster sử dụng Galera MySQL cluster bản 5.6.***
 
-***1.1, Add các repo, key của package Galera MySQL.***
+***2.1, Add các repo, key của package Galera MySQL.***
 
 Ngoài Galera ra thì có thể sử dụng Percona Xtra DB cũng có khả năng sync DB.
 
@@ -155,7 +155,7 @@ Việc add các repo này cần được thực hiện trên 3 node chứa WP v�
 -sudo apt-get update
 ```
 
-***1.2, Cài đặt MySQL và Galera***
+***2.2, Cài đặt MySQL và Galera***
 
 Việc này cũng cần được thực hiện trên cả 3 máy
 ```
@@ -167,7 +167,7 @@ Khi cài đặt ta sẽ cần set password cho user của MySQL (mặc định s
 Việc cài đặt password này sau khi galera cluster được triển khai thì cả 3 máy sẽ tự động sync password MySQL cho nhau cùng chung 1 password.
 ![]()
 
-***1.3. Cấu hình MySQL trong node WP1.***
+***2.3. Cấu hình MySQL trong node WP1.***
 
 Tạo file *galera.cnf* để chứa các cấu hình cho cluster.
 ```
@@ -224,7 +224,7 @@ Tiếp tục ta cấu hình file */etc/mysql/my.cnf* để tránh việc MySQL t
 47 # bind-address          = 127.0.0.1
 ```
 
-***1.4, Cấu hình MySQL trên các node còn lại***
+***2.4, Cấu hình MySQL trên các node còn lại***
 
 Tại các node còn lại ta cũng tạo thêm file galera.cnf như ở node để cấu hình galera cluster. Trong file galera.cnf ta chỉ thay đổi lại phần **Galera Node Configuration** theo cấu hình của node.
 
@@ -279,7 +279,7 @@ wsrep_node_name="WP3"
 
 Ngoài ra ta cũng  tiếp tục comment dòng thứ 47 trong file */etc/mysql/my.cnf* tại từng node.
 
-***1.5, Triển khai galera cluster***
+***2.5, Triển khai galera cluster***
 
 Trên cả 3 node ta tắt MySQL đang chạy.
 
@@ -350,7 +350,7 @@ mysql -u root -p -e "SHOW STATUS LIKE 'wsrep_cluster_size'"
 Cũng như vậy ta khởi động MySQL cluster và check số lượng cluster trên **node3-WP3**
 ![node3clustercheck](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/node3clustercheck.png)
 
-***1.6, Kiểm tra việc đồng bộ giữa các node qua Galera***
+***2.6, Kiểm tra việc đồng bộ giữa các node qua Galera***
 
 Sau khi triển khai Galera Cluster tất cả các node còn lại sẽ được tự động sync password của node triển khai Galera đầu tiên.
 
@@ -381,9 +381,9 @@ Quay trở lại node1, ta kiểm tra xem các thông tin được nhập từ n
 Đến thời điểm này thì cả 3 node WP1, WP2, WP3 đã được cài đặt và triển khai Galera MySQL cluster thành công.
 
 
-***2, Cấu hình Sync web content sử dụng GLUSTERFS***
+***3, Cấu hình Sync web content sử dụng GLUSTERFS***
 
-***2.1, Cài đặt gluster-server và các package***
+***3.1, Cài đặt gluster-server và các package***
  Trên cả 3 node ta sử dụng câu lệnh 
  ``` 
  sudo apt install -y glusterfs-* 
@@ -469,9 +469,9 @@ mount -a
 ``` 
 để bắt đầu mount và bắt đầu sync.
 
-***3, Cài đặt Wordpress***
+***4, Cài đặt Wordpress***
 
-***3.1, Cài đặt apache và php***
+***4.1, Cài đặt apache và php***
 
 Ta sử dụng câu lệnh sau trên cả 3 node.
 
@@ -487,7 +487,7 @@ sudo chown -R www-data:www-data /var/www/html
 
 Tại một node bất kỳ
 
-***3.2, Tạo DB wordpress***
+***4.2, Tạo DB wordpress***
 
 Trên node bất kỳ, truy cập vào MySQL shell
 Tại đó ta tạo ra một DB wordpress để làm wordpress DB như anh dưới
@@ -503,7 +503,7 @@ Ta chuyển sang các node khác để xác nhận wordpress DB này đã đư�
 ![wpnode2sync](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/wpnode2sync.png)
 ![wpnode3sync](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/wpnode3sync.png)
 
-***3.3, Cài đặt Wordpresss**
+***4.3, Cài đặt Wordpresss**
 
 Tải wordpress bản mới nhất về và giải nén.
 ```
@@ -546,7 +546,7 @@ Ta có thể truy cập cả 3 node cùng 1 wordpress.
 ![WP2](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/WP2.png)
 ![WP3](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/WP3.png)
 
-## III, Triển khai HAproxy, Load balance, keepalive trên 2 node là HA1 và HA2
+III, Triển khai HAproxy, Load balance, keepalive trên 2 node là HA1 và HA2
 
 -------------------------------------------------------------------------------------------------
 
