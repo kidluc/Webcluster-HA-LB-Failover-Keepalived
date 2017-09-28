@@ -1,6 +1,8 @@
 # Báo cáo về việc thực hành triển khai Cluster Website **(WordPress)**
 
-#### I, Mô hình triển khai.
+
+***I, Mô hình triển khai.
+
 Ở đây, chúng em triển khai mô hình gồm có 2 Node làm HAproxy, KeepAlive, Failover và 3 Node dùng để đặt Wordpress cùng DB cluster.
 
  * WP1	10.0.0.138	WP+DB cluster
