@@ -28,7 +28,81 @@ Cấu hình lại file */etc/hosts* thêm các dòng sau
 
 II, Cấu hình các máy chứa Wordpress và DB Cluster.
 -------------------------------------------------------------------
-***1, Cấu hình DB cluster sử dụng Galera MySQL cluster bản 5.6.***
+Ở đây ta sử dụng 2 cách để đồng bộ dữ liệu trong DB cluster là Percona XtraDB hoặc Galera MySQL Cluster.
+
+***1-1, Cấu hình DB cluster sử dụng Percona XtraDB***
+***1.1, Cài đặt My SQL Multi Cluster - Percona Extra DB ***
+Để tránh việc xung đột với cài đặt bạn cần gỡ bỏ MySQL để tránh bị các lỗi không cần thiết. Dùng câu lệnh sau:
+```sudo apt-get remove apparmor```
+b, Cài đặt các gói bổ trợ và update hệ điều hành
+```wget https://repo.percona.com/apt/percona-release_0.1-4.$(lsb_release -sc)_all.deb
+sudo dpkg -i percona-release_0.1-4.$(lsb_release -sc)_all.deb
+sudo apt-get update```
+c, Cài đặt gói Percona XtraDB Cluster server
+```sudo apt-get install percona-xtradb-cluster-56```
+
+***1.2, Cấu hình từng node ***
+
+**Chú ý**: Sau khi cài đặt  Percona thì dịch vụ Mysql tự động được bật, chúng ta cần tắt dịch vụ trên cả 3 node đi bằng lệnh:
+``` /etc/init.d/mysql stop```
+
+**Node 1**
+Cấu hình lại file */etc/mysql/my.cnf* và thêm nội dung sau:
+```sh
+[mysqld]
+
+datadir=/var/lib/mysql
+user=mysql
+
+# Path to Galera library
+wsrep_provider=/usr/lib/libgalera_smm.so
+
+# Cluster connection URL contains the IPs of node#1, node#2 and node#3
+wsrep_cluster_address=gcomm://10.0.0.138,10.0.0.139,10.0.0.140
+
+# In order for Galera to work correctly binlog format should be ROW
+binlog_format=ROW
+
+# MyISAM storage engine has only experimental support
+default_storage_engine=InnoDB
+
+# This changes how InnoDB autoincrement locks are managed and is a requirement for Galera
+innodb_autoinc_lock_mode=2
+
+# Node #1 address
+wsrep_node_address=10.0.0.138
+
+# SST method
+wsrep_sst_method=xtrabackup-v2
+
+# Cluster name
+wsrep_cluster_name=Cluster-Wordpress
+
+# Authentication for SST method
+wsrep_sst_auth="sstuser:s3cretPass"
+```
+Sau đó ta chạy bootstrap trên Node1 để làm bootstrap kết nối với các máy còn lại
+```/etc/init.d/mysql bootstrap-pxc```
+Ta có thể kiểm tra kết quả trong mysql shell bằng lệnh
+```show status like 'wsrep%';``` sẽ có kết quả như hình dưới đây.
+![]()
+
+Trong MySQL shell tạo user với các quyền thích hợp.
+```
+mysql> CREATE USER 'sstuser'@'localhost' IDENTIFIED BY 's3cretPass';
+mysql> GRANT PROCESS, RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'sstuser'@'localhost';
+mysql> FLUSH PRIVILEGES;
+mysql> exit;
+```
+
+**Node 2**
+Tương tự node 1 chỉnh file /etc/mysql/my.cnf chỉ đổi dòng wsrep_node_address=10.0.0.138 => wsrep_node_address=10.0.0.139
+
+
+
+
+
+***1-2, Cấu hình DB cluster sử dụng Galera MySQL cluster bản 5.6.***
 ***1.1, Add các repo, key của package Galera MySQL.***
 Ngoài Galera ra thì có thể sử dụng Percona Xtra DB cũng có khả năng sync DB.
 Việc add các repo này cần được thực hiện trên 3 node chứa WP và DB cluster.
