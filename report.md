@@ -448,7 +448,9 @@ mount -a
 để bắt đầu mount và bắt đầu sync.
 
 ***3, Cài đặt Wordpress***
-***3.1, Cài đặt apache và php ***
+
+***3.1, Cài đặt apache và php***
+
 Ta sử dụng câu lệnh sau trên cả 3 node.
 
 ```
@@ -463,7 +465,8 @@ sudo chown -R www-data:www-data /var/www/html
 
 Tại một node bất kỳ
 
-***3.2, Tạo DB wordpress ***
+***3.2, Tạo DB wordpress***
+
 Trên node bất kỳ, truy cập vào MySQL shell
 Tại đó ta tạo ra một DB wordpress để làm wordpress DB như anh dưới
 ![]()
@@ -479,6 +482,7 @@ Ta chuyển sang các node khác để xác nhận wordpress DB này đã đư�
 ![]()
 
 ***3.3, Cài đặt Wordpresss**
+
 Tải wordpress bản mới nhất về và giải nén.
 ```
 wget http://wordpress.org/latest.tar.gz
@@ -531,6 +535,7 @@ HA2: 10.0.0.136
 V-IP: 10.0.0.131
 
 ***Triển khai HAproxy, Load balance***
+
 Bước 1:
 
 Trên cả 2 node.
@@ -688,7 +693,9 @@ Truy cập vào HA qua IP 10.0.0.131 ta có logs sau.
 ![]()
 
 ***Test Failover***
+
 Bây giờ ta shutdown node HA1.
+
 Ngay lập tức node HA2 sẽ nhận IP 10.0.0.131 từ node 1 và trở thành Master.
 ![]()
 ![]()
