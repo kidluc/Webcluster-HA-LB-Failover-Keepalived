@@ -3,7 +3,7 @@
 
 ***I, Mô hình triển khai.***
 
-[hannv!](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/Clusterwebtopo.png)
+![hannv](https://github.com/kidluc/Webcluster-HA-LB-Failover-Keepalived/blob/master/pic/Clusterwebtopo.png)
 
 Ở đây, chúng em triển khai mô hình gồm có 2 Node làm HAproxy, KeepAlive, Failover và 3 Node dùng để đặt Wordpress cùng DB cluster.
 
